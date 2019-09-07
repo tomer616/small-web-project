@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="userListController.js"></script>
+    <script type="text/javascript">
+            var $ = jQuery.noConflict();
+            var uri = 'api/projectAPI/checkIfCurrIsSecretary';
+            $.ajax({
+                url: uri,
+                dataType: 'json',
+                data: {},
+                async: false,
+                success: function (data) {
+                    if (data == null || data == "false" || data == false) {
+                        window.open("login.html", "_self");
+                    }
+                }
+
+            });
+    </script>
+
+</head>
+
+
+
+
+<body ng-app="myApp" ng-controller="userListController">
+    <table class="table table-striped">
+        <tr>
+            <td>Full Name</td>
+            <td>ID</td>
+            <td>Email</td>
+            <td>
+               
+                <button class="btn btn-warning" ng-click="logout_click()">Log Out </button>
+            </td>
+        </tr>
+
+        <tr ng-repeat="user in students">
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.ID}}</td>
+            <td>{{user.email}}</td>
+            <!--<td><button class="btn btn-success" ng-click="editStudent(user)" data-toggle="modal" onclick="window.location.href = 'StudentPage.html?id={{user.ID}}';">View Grades </button></td>-->
+            <td><button class="btn btn-success" ng-click="openStudentGrades(user.ID)">View Grades </button></td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

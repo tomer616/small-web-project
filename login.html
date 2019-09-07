@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link href="resources/basis.css" rel="stylesheet" />
+    <link href="resources/login-style.css" rel="stylesheet" />
+    <script src="resources/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        function signin_click()
+        {
+            var $ = jQuery.noConflict();
+            var result;
+            
+            var uri = 'api/projectAPI/login';
+            $.ajax({
+                url: uri,
+                dataType: 'json',
+                data: { un: $("#UserName").val(), pss: $("#Password").val() },
+                async: false,
+                success: function (data) {
+                    $.each(data, function (key, item) {
+                        if (item.loginFailedMsg == "ok")
+                        {
+                            if (item.isSecretary == true || item.isSecretary=="true")
+                                window.open("UserList.html", "_self");
+                            else
+                                window.open("StudentPage.html?id=" + item.ID, "_self");
+                        }
+                        else
+                        {
+                            alert(item.loginFailedMsg);
+                        }
+                    });
+                }
+
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid general-background login-wrapper">
+        <div class="col-xs-offset-3 col-xs-6 general-login-box" style="padding-left:200px;top:30% !important;">
+            <div class="col-xs-8">
+                <form action="#" runat="server">
+                    <div class="form-group">
+                        <h1>Log In</h1>
+                        <label> ID</label>
+                        <input type="text" id="UserName" class="form-control" placeholder="User name" />
+                        <br />
+                        <label> Password</label>
+                        <input type="password" id="Password" class="form-control" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <a class="btn btn-primary btn-round btn-block btn-login" onclick="signin_click();">Sign In</a>
+                        </div>
+                        <a class="col-xs-12 text-center" href="Register.aspx">Don't have an account? Register</a>
+                        <div>
+                            <a class="col-xs-12 text-center" href="ForgotPassword.aspx">Forgot password</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>
